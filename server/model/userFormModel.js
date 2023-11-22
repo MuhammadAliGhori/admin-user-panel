@@ -18,6 +18,10 @@ const userFormSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+    adminKey: {
+    type: String,
+    required: true,
+  },
 }, { timestamps: true });
 
 const UserForm = mongoose.model('UserForm', userFormSchema);

@@ -19,7 +19,9 @@ app.use('/api', loginRoutes);
 const userRoutes = require('./routes/userFormRoutes');
 app.use('/api', userRoutes);
 
-
+// booking form
+const bookingRoutes = require('./routes/bookingRoutes');
+app.use('/api', bookingRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
@@ -32,7 +34,7 @@ const start = async () => {
     await connectDB("mongodb+srv://alighori:TP8k0sgnbDiXPiS2@cluster0.xcotkn8.mongodb.net/alighori?retryWrites=true&w=majority");
     console.log("MongoDB connected");
   } catch (error) {
-    console.error('Failed to connect to MongoDB', error);
+    console.error('Failed to connect to MongoDB', error.message);
   }
 };
 
