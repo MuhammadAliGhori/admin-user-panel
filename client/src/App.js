@@ -9,6 +9,7 @@ import NavbarAdmin from "./users/header/NavbarAdmin";
 import AllUsers from "./users/AllUsers";
 import BookingForm from "./users/BookingForm";
 import Home from "./users/Home";
+import AdminPannel from "./users/AdminPannel";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <NavbarAdmin />
         <Routes>
           <Route exact path="/admin" element={<Admin />} />
+          <Route path="/adminpanel" element={<AdminPannel />} />
           <Route exact path="/" element={<Home />} />
           <Route path="/user" element={<User />} />
           <Route path="/userlogin" element={<UserLogin />} />

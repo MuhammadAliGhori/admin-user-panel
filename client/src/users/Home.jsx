@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
+import Button from "react-bootstrap/Button";
 
 export default function Home() {
   const [bookings, setBookings] = useState([]);
@@ -24,7 +25,7 @@ export default function Home() {
       className="bg-info d-flex justify-content-center align-items-center flex-column"
       style={{ height: "80vh" }}
     >
-      <h1 className="text-light">There is a Booking Platform</h1>
+      <h1 className="text-light">Consumers Record </h1>
       <div className="d-flex mt-3">
         {bookings.map((booking) => (
           <Card key={booking._id} style={{ width: "18rem", margin: "20px" }}>

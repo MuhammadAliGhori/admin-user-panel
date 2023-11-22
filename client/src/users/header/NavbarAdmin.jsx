@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { getAdminKey } from "../../bookingUtils";
 
 function NavbarAdmin() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ function NavbarAdmin() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [users, setUsers] = useState([]);
-
+  const correctAdminKey = process.env.BOOKING_FORM_KEY;
   // fetch all users
   useEffect(() => {
     const fetchUsers = async () => {
@@ -45,19 +46,28 @@ function NavbarAdmin() {
           className="m-3 text-decoration-none text-dark fw-bold bg-light border-info-subtle"
           onClick={handleShow}
         >
-          Admin Pannel
+          Users
         </Button>
         <div className="">
-        <Link to="/" className="px-3 text-decoration-none text-dark fw-bold">
+          <Link to="/" className="px-3 text-decoration-none text-dark fw-bold">
             Home{" "}
           </Link>
-          <Link
-            to="/admin"
-            className="px-3 text-decoration-none text-dark fw-bold"
-          >
-            Admin
-          </Link>
-        
+          {correctAdminKey === getAdminKey ? (
+            <Link
+              to="/admin"
+              className="px-3 text-decoration-none text-dark fw-bold"
+            >
+              Admin
+            </Link>
+          ) : (
+            <Link
+              to="/admin"
+              className="px-3 text-decoration-none text-dark fw-bold"
+            >
+              Admin
+            </Link>
+          )}
+
           <Link
             to="/userlogin"
             className="px-3 text-decoration-none text-dark fw-bold"

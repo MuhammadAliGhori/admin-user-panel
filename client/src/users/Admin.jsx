@@ -16,7 +16,6 @@ export default function User() {
         alert("Please check the box to proceed.");
         return;
       }
-
       const response = await axios.post(
         "http://localhost:8000/api/adminlogin",
         {
@@ -27,7 +26,7 @@ export default function User() {
 
       if (response.status === 201) {
         console.log("Admin created successfully:", response.data.user);
-        navigate("/user");
+        navigate("/adminpanel");
       } else {
         console.log("Invalid credentials");
       }

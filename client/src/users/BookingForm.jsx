@@ -143,7 +143,6 @@ function BookingForm() {
               onChange={handleChange}
             />
           </div>
-
           <button type="submit" className="btn btn-primary mt-3 w-100">
             Submit
           </button>
