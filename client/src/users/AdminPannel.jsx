@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
+import Dropdown from "react-bootstrap/Dropdown";
+import Modal from "react-bootstrap/Modal";
 import Card from "react-bootstrap/Card";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 
 export default function AdminPanel() {
+  const correctAdminKey = process.env.BOOKING_FORM_KEY;
   const [bookings, setBookings] = useState([]);
   const [editingBookingId, setEditingBookingId] = useState(null);
   const [editedBookingData, setEditedBookingData] = useState({});
-  const correctAdminKey = process.env.BOOKING_FORM_KEY;
+  const [users, setUsers] = useState([]);
+  const [editingUserId, setEditingUserId] = useState(null);
+  const [editedUserData, setEditedUserData] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     async function fetchBookings() {
@@ -46,21 +52,204 @@ export default function AdminPanel() {
     handleEdit(id);
   };
 
+  // delete booking
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/api/deletebooking/${id}`
+      );
+      console.log("Booking deleted:", response.data);
+      setBookings(bookings.filter((booking) => booking._id !== id));
+    } catch (error) {
+      console.error("Error deleting booking:", error);
+    }
+  };
+
+  // All users
+  // Inside useEffect to fetch users
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/getallusers"
+        );
+        if (response.status === 200) {
+          setUsers(response.data.users);
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  // Edit User
+  const handleEditUser = (userId) => {
+    const userToEdit = users.find((user) => user._id === userId);
+    setEditingUserId(userId);
+    setEditedUserData({ ...userToEdit });
+    setShowModal(true);
+  };
+  const handleUpdateUser = async (userId) => {
+    try {
+      const adminKey = "ali@@&&**786";
+      const response = await axios.put(
+        `http://localhost:8000/api/updateuser/${userId}`,
+        editedUserData,
+        {
+          headers: {
+            "Admin-Key": adminKey, 
+          },
+        }
+      );
+      console.log("User updated:", response.data);
+
+      setEditingUserId(null);
+      setEditedUserData({});
+      setShowModal(false);
+    } catch (error) {
+      console.error("Error updating user:", error);
+      // setShowModal(false);
+    }
+  };
+
+  // delete User
+  const handleDeleteUser = async (userId) => {
+    try {
+      const adminKey = "ali@@&&**786";
+      const response = await axios.delete(
+        `http://localhost:8000/api/deleteUser/${userId}`,
+        {
+          data: { adminKey },
+        }
+      );
+
+      console.log("User deleted:", response.data);
+
+      // Update the state by filtering out the deleted user
+      setUsers(users.filter((user) => user._id !== userId));
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setEditingUserId(null);
+    setEditedUserData({});
+  };
+
   return (
-    <div
-      className="bg-info d-flex justify-content-center align-items-center flex-column"
-      style={{ height: "80vh" }}
-    >
-      <h1 className="text-light">Booking Forms of Consumers</h1>
-      <div className="d-flex mt-3">
+    <div className="bg-info d-flex justify-content-center align-items-center flex-column pb-5">
+      <div className="d-flex w-75 mt-5">
+        <h3 className="text-light w-50 ">Booking Forms of Consumers</h3>
+
+        <Dropdown className="w-50">
+          <Dropdown.Toggle
+            className="w-100 text-center"
+            variant="secondary"
+            id="dropdown-basic"
+          >
+            Users List
+          </Dropdown.Toggle>
+          <Dropdown.Menu className="w-100">
+            {users.map((user) => (
+              <div className="d-flex justify-content-between mb-2 px-2">
+                <Dropdown.Item key={user._id}>
+                  {user.name} - {user.email}
+                </Dropdown.Item>
+                <Button
+                  className="bg-success border-0 mx-3"
+                  onClick={() => handleEditUser(user._id)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  className="bg-danger border-0"
+                  onClick={() => handleDeleteUser(user._id)}
+                >
+                  Delete
+                </Button>
+              </div>
+            ))}
+          </Dropdown.Menu>
+          <Modal show={showModal} onHide={handleCloseModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit User</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="d-flex flex-column">
+              <input
+                type="text"
+                value={editedUserData.email || ""}
+                onChange={(e) =>
+                  setEditedUserData({
+                    ...editedUserData,
+                    email: e.target.value,
+                  })
+                }
+                placeholder="Enter Email"
+                className="w-100"
+              />
+              <br />
+              <input
+                type="text"
+                value={editedUserData.name || ""}
+                onChange={(e) =>
+                  setEditedUserData({ ...editedUserData, name: e.target.value })
+                }
+                placeholder="Enter Name"
+                className="w-100"
+              />
+              <br />
+              <input
+                type="password"
+                value={editedUserData.password || ""}
+                onChange={(e) =>
+                  setEditedUserData({
+                    ...editedUserData,
+                    password: e.target.value,
+                  })
+                }
+                placeholder="Enter Password"
+                className="w-100"
+              />
+              <br />
+              <input
+                type="text"
+                value={editedUserData.description || ""}
+                onChange={(e) =>
+                  setEditedUserData({
+                    ...editedUserData,
+                    description: e.target.value,
+                  })
+                }
+                placeholder="Enter Description"
+                className="w-100"
+              />
+              <br />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="primary"
+                onClick={() => handleUpdateUser(editingUserId)}
+              >
+                Save
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </Dropdown>
+      </div>
+
+      <div className="d-flex flex-wrap justify-content-between px-5 mt-3">
         {bookings.map((booking) => (
-          <div key={booking._id}>
-            <div>
+          <div className="" key={booking._id}>
+            <div className="">
               {editingBookingId === booking._id ? (
                 <Card
                   style={{
                     height: "300px",
-                    maxWidth: "300px",
+                    maxWidth: "100%",
                     width: "100%",
                     overflow: "scroll",
                   }}
@@ -167,54 +356,81 @@ export default function AdminPanel() {
                   </Card.Body>
                 </Card>
               ) : (
-                <Card style={{ width: "18rem", margin: "20px" }}>
-                  <Card.Body>
-                    <div className="text-end">
-                      {correctAdminKey === booking.adminKey ? (
-                        <div className="">
-                          <Button className="bg-danger border-0 mx-2">
-                            Delete
-                          </Button>
-                          <Button
-                            className="bg-success border-0"
-                            onClick={() => setEditingBookingId(booking._id)}
-                          >
-                            Edit
-                          </Button>
+                <>
+                  {users.some((user) => user._id === booking.userId) && (
+                    <Card
+                      style={{ width: "20rem", margin: "20px" }}
+                      className=""
+                    >
+                      <Card.Body>
+                        <div className="text-end">
+                          {correctAdminKey === booking.adminKey ? (
+                            <div className="">
+                              <Button
+                                className="bg-danger border-0 mx-2"
+                                onClick={() => handleDelete(booking._id)}
+                              >
+                                Delete
+                              </Button>
+                              <Button
+                                className="bg-success border-0"
+                                onClick={() => setEditingBookingId(booking._id)}
+                              >
+                                Edit
+                              </Button>
+                            </div>
+                          ) : (
+                            ""
+                          )}
                         </div>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                    <Card.Title className="mt-3">{booking.name}</Card.Title>
-                    <Card.Text>
-                      <strong>From: </strong>
-                      {booking.fromCountry}
-                      <br />
-                      <strong>To: </strong>
-                      {booking.toCountry}
-                      <br />
-                      <strong>Description: </strong>
-                      <p
-                        className="mb-0"
-                        style={{
-                          display: "-webkit-box",
-                          WebkitLineClamp: 1,
-                          WebkitBoxOrient: "vertical",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {booking.description}
-                      </p>
-                      <strong>From Date: </strong>
-                      {new Date(booking.fromDate).toDateString()}
-                      <br />
-                      <strong>To Date: </strong>
-                      {new Date(booking.toDate).toDateString()}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
+
+                        {/* User name */}
+                        <div className="d-flex align-items-center mt-3 gap-2">
+                          <strong>User: </strong>
+                          <h3 className="bold w-100">
+                            {users.map((user) => {
+                              if (user._id === booking.userId) {
+                                return `${user.name}`;
+                              }
+                              return null;
+                            })}
+                          </h3>
+                        </div>
+                        <Card.Title className="mt-3">
+                          <strong>Consumer :</strong> <space />
+                          <space />
+                          {booking.name}
+                        </Card.Title>
+                        <Card.Text>
+                          <strong>From: </strong>
+                          {booking.fromCountry}
+                          <br />
+                          <strong>To: </strong>
+                          {booking.toCountry}
+                          <br />
+                          <strong>Description: </strong>
+                          <p
+                            className="mb-0"
+                            style={{
+                              display: "-webkit-box",
+                              WebkitLineClamp: 1,
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {booking.description}
+                          </p>
+                          <strong>From Date: </strong>
+                          {new Date(booking.fromDate).toDateString()}
+                          <br />
+                          <strong>To Date: </strong>
+                          {new Date(booking.toDate).toDateString()}
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  )}
+                </>
               )}
             </div>
           </div>

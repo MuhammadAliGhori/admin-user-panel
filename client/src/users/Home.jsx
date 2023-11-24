@@ -23,12 +23,11 @@ export default function Home() {
   return (
     <div
       className="bg-info d-flex justify-content-center align-items-center flex-column"
-      style={{ height: "80vh" }}
     >
-      <h1 className="text-light">Consumers Record </h1>
-      <div className="d-flex mt-3">
+      <h1 className="text-light mt-3">Consumers Record </h1>
+      <div className="d-flex flex-wrap px-3 justify-content-center align-items-center my-3">
         {bookings.map((booking) => (
-          <Card key={booking._id} style={{ width: "18rem", margin: "20px" }}>
+          <Card key={booking._id} style={{ width: "20rem", margin: "20px" }}>
             <Card.Body>
               <Card.Title>{booking.name}</Card.Title>
               <Card.Text>

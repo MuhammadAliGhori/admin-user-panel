@@ -78,8 +78,8 @@ const getAllUsers = async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 };
-// get one user
 
+// get one user
 const getSingleUser = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -96,9 +96,84 @@ const getSingleUser = async (req, res) => {
   }
 };
 
+// edit user
+const editUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const adminKey = req.headers["admin-key"];
+    const correctAdminKey = "ali@@&&**786";
+
+    if (adminKey !== correctAdminKey) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized access of admin key" });
+    }
+
+    const { email, name, password, description } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const updatedUserData = {
+      email,
+      name,
+      password: hashedPassword,
+      description,
+    };
+
+    const updatedUser = await UserForm.findByIdAndUpdate(
+      userId,
+      updatedUserData,
+      {
+        new: true,
+      }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "User updated successfully", user: updatedUser });
+  } catch (error) {
+    console.error("Error while updating user:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+// delete user
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const adminKey = req.body.adminKey;
+    console.log(adminKey, "ali");
+    const correctAdminKey = "ali@@&&**786";
+
+    if (adminKey !== correctAdminKey) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized access of admin key" });
+    }
+
+    const deletedUser = await UserForm.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res
+      .status(200)
+      .json({ message: "User deleted successfully", user: deletedUser });
+  } catch (error) {
+    console.error("Error while deleting user:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   createUserFrom,
   userLogin,
   getAllUsers,
   getSingleUser,
+  editUser,
+  deleteUser,
 };

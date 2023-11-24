@@ -12,4 +12,10 @@ router.get('/getallusers', userFormController.getAllUsers);
 
 router.get('/getallusers/:userId', userFormController.getSingleUser); 
 
+
+router.put('/updateuser/:userId', userFormController.editUser);
+
+
+router.delete('/deleteuser/:userId', userFormController.deleteUser); 
+
 module.exports = router;

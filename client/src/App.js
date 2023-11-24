@@ -20,7 +20,7 @@ function App() {
           <Route exact path="/admin" element={<Admin />} />
           <Route path="/adminpanel" element={<AdminPannel />} />
           <Route exact path="/" element={<Home />} />
-          <Route path="/user" element={<User />} />
+          <Route path="/createuser" element={<User />} />
           <Route path="/userlogin" element={<UserLogin />} />
           <Route path="/allusers" element={<AllUsers />} />
           <Route path={`/booking/:userId`} element={<BookingForm />} />

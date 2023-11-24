@@ -35,7 +35,6 @@ function NavbarAdmin() {
 
   const handleUserClick = (userId) => {
     console.log(userId);
-
     navigate(`/booking/${userId}`);
   };
   return (
@@ -67,7 +66,13 @@ function NavbarAdmin() {
               Admin
             </Link>
           )}
-
+          
+          <Link
+            to="/createuser"
+            className="px-3 text-decoration-none text-dark fw-bold"
+          >
+            Create User
+          </Link>
           <Link
             to="/userlogin"
             className="px-3 text-decoration-none text-dark fw-bold"

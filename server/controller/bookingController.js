@@ -97,8 +97,31 @@ const editBooking = async (req, res) => {
   }
 };
 
+// Delete a booking by ID
+const deleteBooking = async (req, res) => {
+  try {
+    const bookingId = req.params.id;
+    console.log("Deleting booking with ID:", bookingId);
+    const deletedBooking = await Booking.findByIdAndDelete(bookingId);
+
+    if (!deletedBooking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+    console.log("Booking deleted successfully:", deletedBooking); 
+    return res.status(200).json({
+      message: "Booking deleted successfully",
+      booking: deletedBooking,
+    });
+  } catch (error) {
+    console.error("Error while deleting booking:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+
 module.exports = {
   createBooking,
   getAllBookings,
   editBooking,
+  deleteBooking
 };
