@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./custom.css"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -80,7 +81,7 @@ export default function UserLogin() {
           </label>
         </div>
         {error && <div className="text-danger">{error}</div>}
-        <button type="submit" className="btn btn-primary mt-3 w-100">
+        <button type="submit" className="custom-btn btn-9 mt-3 w-100">
           Submit
         </button>
       </form>

@@ -21,16 +21,18 @@ export default function Home() {
     fetchBookings();
   }, []);
   return (
-    <div
-      className="bg-info d-flex justify-content-center align-items-center flex-column"
-    >
+    <div className="bg-info d-flex justify-content-center align-items-center flex-column">
       <h1 className="text-light mt-3">Consumers Record </h1>
       <div className="d-flex flex-wrap px-3 justify-content-center align-items-center my-3">
         {bookings.map((booking) => (
-          <Card key={booking._id} style={{ width: "20rem", margin: "20px" }}>
+          <Card
+            key={booking._id}
+            style={{ width: "20rem", margin: "20px" }}
+            className="item-card"
+          >
             <Card.Body>
               <Card.Title>{booking.name}</Card.Title>
-              <Card.Text>
+              <Card.Text className="item-card-title">
                 <strong>From: </strong>
                 {booking.fromCountry}
                 <br />

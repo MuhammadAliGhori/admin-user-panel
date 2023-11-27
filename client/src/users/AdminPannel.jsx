@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Modal from "react-bootstrap/Modal";
 import Card from "react-bootstrap/Card";
+import "./custom.css";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 
@@ -99,7 +100,7 @@ export default function AdminPanel() {
         editedUserData,
         {
           headers: {
-            "Admin-Key": adminKey, 
+            "Admin-Key": adminKey,
           },
         }
       );
@@ -160,13 +161,13 @@ export default function AdminPanel() {
                   {user.name} - {user.email}
                 </Dropdown.Item>
                 <Button
-                  className="bg-success border-0 mx-3"
+                  className="custom-btn btn-9 border-0 mx-3"
                   onClick={() => handleEditUser(user._id)}
                 >
                   Edit
                 </Button>
                 <Button
-                  className="bg-danger border-0"
+                  className="custom-btn btn-9 border-0"
                   onClick={() => handleDeleteUser(user._id)}
                 >
                   Delete
@@ -231,7 +232,7 @@ export default function AdminPanel() {
             </Modal.Body>
             <Modal.Footer>
               <Button
-                variant="primary"
+                className="custom-btn btn-9"
                 onClick={() => handleUpdateUser(editingUserId)}
               >
                 Save
@@ -253,17 +254,23 @@ export default function AdminPanel() {
                     width: "100%",
                     overflow: "scroll",
                   }}
+                  className="item-card"
                 >
                   <Card.Body>
                     <form onSubmit={(e) => handleSubmit(e, booking._id)}>
                       <button
                         type="submit"
-                        className="btn btn-primary mt-3 w-100"
+                        className="custom-btn btn-9 mt-3 w-100"
                       >
                         Save Changes
                       </button>
                       <div className="form-group text-start mt-3">
-                        <label htmlFor="exampleInputName">Name</label>
+                        <label
+                          htmlFor="exampleInputName"
+                          className="item-card-title"
+                        >
+                          Name
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -360,24 +367,24 @@ export default function AdminPanel() {
                   {users.some((user) => user._id === booking.userId) && (
                     <Card
                       style={{ width: "20rem", margin: "20px" }}
-                      className=""
+                      className="item-card"
                     >
                       <Card.Body>
                         <div className="text-end">
                           {correctAdminKey === booking.adminKey ? (
                             <div className="">
-                              <Button
-                                className="bg-danger border-0 mx-2"
+                              <button
+                                className="custom-btn btn-9 border-0 mx-2"
                                 onClick={() => handleDelete(booking._id)}
                               >
                                 Delete
-                              </Button>
-                              <Button
-                                className="bg-success border-0"
+                              </button>
+                              <button
+                                className="custom-btn btn-9 border-0"
                                 onClick={() => setEditingBookingId(booking._id)}
                               >
                                 Edit
-                              </Button>
+                              </button>
                             </div>
                           ) : (
                             ""

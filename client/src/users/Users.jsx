@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./custom.css"
 import { useNavigate } from "react-router-dom";
 
 export default function Users() {
@@ -108,7 +109,7 @@ export default function Users() {
             We'll never share your Admin Key with anyone else.
           </small>
         </div>
-        <button type="submit" className="btn btn-primary mt-3 w-100">
+        <button type="submit" className="custom-btn btn-9 mt-3 w-100">
           Submit
         </button>
       </form>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import "./custom.css"
 
 function BookingForm() {
   const { userId } = useParams();
@@ -143,7 +144,7 @@ function BookingForm() {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="btn btn-primary mt-3 w-100">
+          <button type="submit" className="custom-btn btn-9 mt-3 w-100">
             Submit
           </button>
         </form>

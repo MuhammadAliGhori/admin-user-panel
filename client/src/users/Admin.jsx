@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./custom.css";
 import axios from "axios";
 
 export default function User() {
@@ -79,7 +80,7 @@ export default function User() {
             Check me out
           </label>
         </div>
-        <button type="submit" className="btn btn-primary mt-3 w-100">
+        <button type="submit" className="custom-btn btn-9 mt-3 w-100">
           Submit
         </button>
       </form>
