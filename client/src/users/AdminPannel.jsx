@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import "./custom.css";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 export default function AdminPanel() {
   const correctAdminKey = process.env.BOOKING_FORM_KEY;
@@ -143,7 +144,7 @@ export default function AdminPanel() {
 
   return (
     <div className="bg-info d-flex justify-content-center align-items-center flex-column pb-5">
-      <div className="d-flex w-75 mt-5">
+      <div className="d-flex w-100 px-5 mt-5">
         <h3 className="text-light w-50 ">Booking Forms of Consumers</h3>
 
         <Dropdown className="w-50">
@@ -158,7 +159,7 @@ export default function AdminPanel() {
             {users.map((user) => (
               <div className="d-flex justify-content-between mb-2 px-2">
                 <Dropdown.Item key={user._id}>
-                  {user.name} - {user.email}
+                  {user.name} - {user.email} - {user.category}
                 </Dropdown.Item>
                 <Button
                   className="custom-btn btn-9 border-0 mx-3"
@@ -241,7 +242,16 @@ export default function AdminPanel() {
           </Modal>
         </Dropdown>
       </div>
-
+      <div className="d-flex justify-content-start w-100 px-5">
+        <button className="custom-btn  btn-9 mt-3">
+          <Link
+            to="/createuser"
+            className=" text-decoration-none text-light fw-bold"
+          >
+            Create User
+          </Link>
+        </button>
+      </div>
       <div className="d-flex flex-wrap justify-content-between px-5 mt-3">
         {bookings.map((booking) => (
           <div className="" key={booking._id}>

@@ -32,6 +32,10 @@ const bookingModel = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    category: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

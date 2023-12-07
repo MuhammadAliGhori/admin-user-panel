@@ -26,6 +26,7 @@ export default function UserLogin() {
 
       if (response.status === 200) {
         console.log("User logged in successfully:", response.data.user);
+        localStorage.setItem('loggedInUser', JSON.stringify(response.data.user));
         navigate("/");
       } else {
         setError("Invalid credentials");

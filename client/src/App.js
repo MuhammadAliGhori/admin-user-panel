@@ -8,7 +8,7 @@ import UserLogin from "./users/UserLogin";
 import NavbarAdmin from "./users/header/NavbarAdmin";
 import AllUsers from "./users/AllUsers";
 import BookingForm from "./users/BookingForm";
-import Home from "./users/Home";
+import UserPannel from "./users/UserPannel";
 import AdminPannel from "./users/AdminPannel";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
         <Routes>
           <Route exact path="/admin" element={<Admin />} />
           <Route path="/adminpanel" element={<AdminPannel />} />
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<UserPannel />} />
           <Route path="/createuser" element={<User />} />
           <Route path="/userlogin" element={<UserLogin />} />
           <Route path="/allusers" element={<AllUsers />} />

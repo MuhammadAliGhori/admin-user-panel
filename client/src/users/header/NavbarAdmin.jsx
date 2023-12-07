@@ -43,7 +43,7 @@ function NavbarAdmin() {
         
         <div className="">
           <Link to="/" className="px-3 text-decoration-none text-dark fw-bold">
-            Home{" "}
+           User Pannel
           </Link>
           {correctAdminKey === getAdminKey ? (
             <Link
@@ -61,12 +61,7 @@ function NavbarAdmin() {
             </Link>
           )}
           
-          <Link
-            to="/createuser"
-            className="px-3 text-decoration-none text-dark fw-bold"
-          >
-            Create User
-          </Link>
+    
           <Link
             to="/userlogin"
             className="px-3 text-decoration-none text-dark fw-bold"
@@ -101,7 +96,7 @@ function NavbarAdmin() {
                   key={user._id}
                   onClick={() => handleUserClick(user._id)}
                 >
-                  {user.name} - {user.email}
+                  {user.name} - {user.email} - {user.category}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>

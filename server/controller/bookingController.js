@@ -14,6 +14,7 @@ const createBooking = async (req, res) => {
       description,
       fromDate,
       toDate,
+      category
     } = req.body;
 
     // Create a new booking
@@ -25,6 +26,7 @@ const createBooking = async (req, res) => {
       description,
       fromDate,
       toDate,
+      category
     });
 
     return res.status(201).json({
@@ -62,6 +64,7 @@ const editBooking = async (req, res) => {
       description,
       fromDate,
       toDate,
+      category
     } = req.body;
     const bookingId = req.params.id;
     // const providedKey = req.headers["booking-form-key"];
@@ -79,6 +82,7 @@ const editBooking = async (req, res) => {
         description,
         fromDate,
         toDate,
+        category
       },
       { new: true }
     );

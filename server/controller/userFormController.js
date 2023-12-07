@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 // create  user
 const createUserFrom = async (req, res) => {
-  const { email, name, password, description, adminKey } = req.body;
+  const { email, name, password, description, category, adminKey } = req.body;
   const correctAdminKey = "ali@@&&**786";
   try {
     const permissionGranted = true;
@@ -28,6 +28,7 @@ const createUserFrom = async (req, res) => {
         name,
         password: hashedPassword,
         description,
+        category,
         adminKey,
       });
       return res.status(201).json({
@@ -109,7 +110,7 @@ const editUser = async (req, res) => {
         .json({ message: "Unauthorized access of admin key" });
     }
 
-    const { email, name, password, description } = req.body;
+    const { email, name, password, description, category } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const updatedUserData = {
@@ -117,6 +118,7 @@ const editUser = async (req, res) => {
       name,
       password: hashedPassword,
       description,
+      category
     };
 
     const updatedUser = await UserForm.findByIdAndUpdate(

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import "./custom.css"
+import "./custom.css";
 
 function BookingForm() {
   const { userId } = useParams();
@@ -16,6 +16,7 @@ function BookingForm() {
     description: "",
     fromDate: "",
     toDate: "",
+    category: "",
   });
 
   const handleChange = (e) => {
@@ -65,8 +66,9 @@ function BookingForm() {
     <div className="px-5 pb-5">
       {/* <p>User ID: {userDetails.user._id}</p> */}
       <div className="d-flex flex-column justify-content-center align-items-center py-5">
-        <h2 className="bold">Name: {userDetails.user.name}</h2>
+        {/* <h2 className="bold">Name: {userDetails.user.name}</h2>
         <h2 className="bold">Email: {userDetails.user.email}</h2>
+        <h2 className="bold">Category: {userDetails.user.category}</h2> */}
         <form className="w-50" onSubmit={handleSubmit}>
           <div className="form-group text-start mt-3">
             <label htmlFor="exampleInputName">Name </label>
@@ -143,6 +145,20 @@ function BookingForm() {
               value={formData.toDate}
               onChange={handleChange}
             />
+          </div>
+          <div className="form-group text-start mt-3">
+            <label htmlFor="exampleInputCategory">Category</label>
+            <select
+              className="form-control"
+              id="category"
+              value={formData.category}
+              onChange={handleChange}
+            >
+              <option value="">Select Category</option>
+              <option value="education">Education</option>
+              <option value="engineering">Engineering</option>
+              <option value="medical">Medical</option>
+            </select>
           </div>
           <button type="submit" className="custom-btn btn-9 mt-3 w-100">
             Submit
