@@ -1,9 +1,10 @@
 .custom-btn {
-  max-width: 150px;
-  height: 40px;
+  max-width: fit-content;
+  height: auto;
+  font-size: 13px;
   color: #fff;
   border-radius: 5px;
-  padding: 10px 25px;
+  padding: 5px 10px;
   font-family: "Lato", sans-serif;
   font-weight: 500;
   background: #1fd1f9;
@@ -15,6 +16,15 @@
     7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
   outline: none;
 }
+.truncate-10-words {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* display: inline-block; */
+  max-width: 170px;
+  /* width: 100%;  */
+}
+
 .btn-9 {
   border: none;
   transition: all 0.3s ease;
@@ -48,17 +58,21 @@
     inset -4px -4px 6px 0 rgba(255, 255, 255, 0.5),
     inset 4px 4px 6px 0 rgba(116, 125, 136, 0.3);
 }
+.mmbox {
+  background-color: #eef4f9;
+}
 /* cards */
 .item-card {
   transition: 0.5s;
-  color: aliceblue !important;
+  color: black !important;
   cursor: pointer;
   text-align: start;
-  background: linear-gradient(
+  background-color: #fff;
+  /* background: linear-gradient(
     45deg,
     rgba(9, 175, 232, 1) 0%,
     rgba(41, 244, 153, 1) 100%
-  );
+  ); */
   box-shadow: 0 5px 20px rgba(41, 244, 153, 0.3);
 }
 

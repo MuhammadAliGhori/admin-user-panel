@@ -4,12 +4,12 @@ import axios from "axios";
 import "./custom.css";
 
 function BookingForm() {
-  const { userId } = useParams();
+  // const { userId } = useParams();
   const navigate = useNavigate();
-  console.log(userId, "ali");
+  // console.log(userId, "ali");
   const [userDetails, setUserDetails] = useState(null);
   const [formData, setFormData] = useState({
-    userId: userId,
+    // userId: userId,
     name: "",
     fromCountry: "",
     toCountry: "",
@@ -45,7 +45,7 @@ function BookingForm() {
     const fetchUserDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/getallusers/${userId}`
+          `http://localhost:8000/api/getallusers`
         );
         if (response.status === 200) {
           setUserDetails(response.data);
@@ -56,7 +56,7 @@ function BookingForm() {
     };
 
     fetchUserDetails();
-  }, [userId]);
+  }, []);
 
   if (!userDetails) {
     return <div>Loading...</div>;

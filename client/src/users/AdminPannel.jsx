@@ -6,6 +6,7 @@ import "./custom.css";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import BookingTable from "./BookingTable";
 
 export default function AdminPanel() {
   const correctAdminKey = process.env.BOOKING_FORM_KEY;
@@ -143,9 +144,9 @@ export default function AdminPanel() {
   };
 
   return (
-    <div className="bg-info d-flex justify-content-center align-items-center flex-column pb-5">
+    <div className="mmbox d-flex justify-content-center align-items-center flex-column pb-5">
       <div className="d-flex w-100 px-5 mt-5">
-        <h3 className="text-light w-50 ">Booking Forms of Consumers</h3>
+        <h3 className="text-dark w-50 ">Booking Forms of Consumers</h3>
 
         <Dropdown className="w-50">
           <Dropdown.Toggle
@@ -252,9 +253,18 @@ export default function AdminPanel() {
           </Link>
         </button>
       </div>
-      <div className="d-flex flex-wrap justify-content-between px-5 mt-3">
+      <h1 className="mt-3">All Leads</h1>
+      <div className="d-flex flex-wrap justify-content-between px-0 mt-3 position-relative">
+        <BookingTable
+          bookings={bookings}
+          users={users}
+          handleDelete={handleDelete}
+          setEditingBookingId={setEditingBookingId}
+          correctAdminKey={correctAdminKey}
+        />
+
         {bookings.map((booking) => (
-          <div className="" key={booking._id}>
+          <div className="position-absolute w-50" key={booking._id}>
             <div className="">
               {editingBookingId === booking._id ? (
                 <Card
@@ -266,7 +276,7 @@ export default function AdminPanel() {
                   }}
                   className="item-card"
                 >
-                  <Card.Body>
+                  <Card.Body className="">
                     <form onSubmit={(e) => handleSubmit(e, booking._id)}>
                       <button
                         type="submit"
@@ -374,79 +384,80 @@ export default function AdminPanel() {
                 </Card>
               ) : (
                 <>
-                  {users.some((user) => user._id === booking.userId) && (
-                    <Card
-                      style={{ width: "20rem", margin: "20px" }}
-                      className="item-card"
-                    >
-                      <Card.Body>
-                        <div className="text-end">
-                          {correctAdminKey === booking.adminKey ? (
-                            <div className="">
-                              <button
-                                className="custom-btn btn-9 border-0 mx-2"
-                                onClick={() => handleDelete(booking._id)}
-                              >
-                                Delete
-                              </button>
-                              <button
-                                className="custom-btn btn-9 border-0"
-                                onClick={() => setEditingBookingId(booking._id)}
-                              >
-                                Edit
-                              </button>
-                            </div>
-                          ) : (
-                            ""
-                          )}
-                        </div>
+                  {
+                    users.some((user) => user._id === booking.userId) && ""
+                    // <Card
+                    //   style={{ width: "20rem", margin: "20px" }}
+                    //   className="item-card"
+                    // >
+                    //   <Card.Body>
+                    //     <div className="text-end">
+                    //       {correctAdminKey === booking.adminKey ? (
+                    //         <div className="">
+                    //           <button
+                    //             className="custom-btn btn-9 border-0 mx-2"
+                    //             onClick={() => handleDelete(booking._id)}
+                    //           >
+                    //             Delete
+                    //           </button>
+                    //           <button
+                    //             className="custom-btn btn-9 border-0"
+                    //             onClick={() => setEditingBookingId(booking._id)}
+                    //           >
+                    //             Edit
+                    //           </button>
+                    //         </div>
+                    //       ) : (
+                    //         ""
+                    //       )}
+                    //     </div>
 
-                        {/* User name */}
-                        <div className="d-flex align-items-center mt-3 gap-2">
-                          <strong>User: </strong>
-                          <h3 className="bold w-100">
-                            {users.map((user) => {
-                              if (user._id === booking.userId) {
-                                return `${user.name}`;
-                              }
-                              return null;
-                            })}
-                          </h3>
-                        </div>
-                        <Card.Title className="mt-3">
-                          <strong>Consumer :</strong> <space />
-                          <space />
-                          {booking.name}
-                        </Card.Title>
-                        <Card.Text>
-                          <strong>From: </strong>
-                          {booking.fromCountry}
-                          <br />
-                          <strong>To: </strong>
-                          {booking.toCountry}
-                          <br />
-                          <strong>Description: </strong>
-                          <p
-                            className="mb-0"
-                            style={{
-                              display: "-webkit-box",
-                              WebkitLineClamp: 1,
-                              WebkitBoxOrient: "vertical",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {booking.description}
-                          </p>
-                          <strong>From Date: </strong>
-                          {new Date(booking.fromDate).toDateString()}
-                          <br />
-                          <strong>To Date: </strong>
-                          {new Date(booking.toDate).toDateString()}
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  )}
+                    //     {/* User name */}
+                    //     <div className="d-flex align-items-center mt-3 gap-2">
+                    //       <strong>User: </strong>
+                    //       <h3 className="bold w-100">
+                    //         {users.map((user) => {
+                    //           if (user._id === booking.userId) {
+                    //             return `${user.name}`;
+                    //           }
+                    //           return null;
+                    //         })}
+                    //       </h3>
+                    //     </div>
+                    //     <Card.Title className="mt-3">
+                    //       <strong>Consumer :</strong> <space />
+                    //       <space />
+                    //       {booking.name}
+                    //     </Card.Title>
+                    //     <Card.Text>
+                    //       <strong>From: </strong>
+                    //       {booking.fromCountry}
+                    //       <br />
+                    //       <strong>To: </strong>
+                    //       {booking.toCountry}
+                    //       <br />
+                    //       <strong>Description: </strong>
+                    //       <p
+                    //         className="mb-0"
+                    //         style={{
+                    //           display: "-webkit-box",
+                    //           WebkitLineClamp: 1,
+                    //           WebkitBoxOrient: "vertical",
+                    //           overflow: "hidden",
+                    //           textOverflow: "ellipsis",
+                    //         }}
+                    //       >
+                    //         {booking.description}
+                    //       </p>
+                    //       <strong>From Date: </strong>
+                    //       {new Date(booking.fromDate).toDateString()}
+                    //       <br />
+                    //       <strong>To Date: </strong>
+                    //       {new Date(booking.toDate).toDateString()}
+                    //     </Card.Text>
+                    //   </Card.Body>
+                    // </Card>
+                  }
                 </>
               )}
             </div>

@@ -38,7 +38,7 @@ export default function Home() {
       <div className="d-flex flex-wrap px-3 mb-5 justify-content-center align-items-center">
         {bookings.map(
           (booking) =>
-            loggedInUser.category === booking.category && (
+            loggedInUser?.category === booking.category && (
               // loggedInUser._id === booking.userId &&
               <Card
                 key={booking._id}

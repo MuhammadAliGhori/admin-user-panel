@@ -7,7 +7,7 @@ const bookingFormKey = process.env.BOOKING_FORM_KEY;
 const createBooking = async (req, res) => {
   try {
     const {
-      userId,
+      // userId,
       name,
       fromCountry,
       toCountry,
@@ -19,7 +19,7 @@ const createBooking = async (req, res) => {
 
     // Create a new booking
     const newBooking = await Booking.create({
-      userId,
+      // userId,
       name,
       fromCountry,
       toCountry,
@@ -57,7 +57,7 @@ const getAllBookings = async (req, res) => {
 const editBooking = async (req, res) => {
   try {
     const {
-      userId,
+      // userId,
       name,
       fromCountry,
       toCountry,
@@ -75,7 +75,7 @@ const editBooking = async (req, res) => {
     const updatedBooking = await Booking.findByIdAndUpdate(
       bookingId,
       {
-        userId,
+        // userId,
         name,
         fromCountry,
         toCountry,

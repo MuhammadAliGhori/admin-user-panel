@@ -68,6 +68,12 @@ function NavbarAdmin() {
           >
             Login
           </Link>
+          <Link
+            to="/booking"
+            className="px-3 text-decoration-none text-dark fw-bold"
+          >
+            Consumers
+          </Link>
         </div>
         <button
           className="m-3 custom-btn btn-9 text-decoration-none  fw-bold"

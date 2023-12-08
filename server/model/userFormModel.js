@@ -23,6 +23,10 @@ const userFormSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: String,
+      required: true,
+    },
     adminKey: {
       type: String,
       required: true,
