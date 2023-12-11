@@ -3,10 +3,12 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Modal from "react-bootstrap/Modal";
 import Card from "react-bootstrap/Card";
 import "./custom.css";
+import { useTable, useFilters } from "react-table";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import BookingTable from "./BookingTable";
+import Table from "../Table";
 
 export default function AdminPanel() {
   const correctAdminKey = process.env.BOOKING_FORM_KEY;
@@ -142,6 +144,14 @@ export default function AdminPanel() {
     setEditingUserId(null);
     setEditedUserData({});
   };
+
+  // react table
+
+  const data = [
+    { name: "Alice", age: 25 },
+    { name: "Bob", age: 30 },
+    // Add more data as needed
+  ];
 
   return (
     <div className="mmbox d-flex justify-content-center align-items-center flex-column pb-5">
@@ -464,6 +474,15 @@ export default function AdminPanel() {
           </div>
         ))}
       </div>
+      <h1 className="py-3">Assigned the Leads</h1>
+      <Table
+        data={bookings}
+        handleEdit={() => handleEdit()}
+        handleDelete={handleDelete}
+        users={users}
+        setEditingBookingId={setEditingBookingId}
+        correctAdminKey={correctAdminKey}
+      />
     </div>
   );
 }
